@@ -1,0 +1,25 @@
+Project Title:
+
+JWT Authentication System with Access & Refresh Tokens using React, Flask, and MySQL
+
+Project Overview:
+
+	This project is a secure full-stack authentication system developed using React for the frontend, Flask for the backend, and MySQL as the database. The application implements JSON Web Token (JWT) authentication using both Access Tokens and Refresh Tokens to provide secure user login and session management.
+
+	Users can register, log in, access protected routes, and automatically receive a new access token when the existing one expires without being logged out immediately. Axios interceptors are used to attach authentication tokens to API requests and handle token refresh automatically, providing a seamless user experience while maintaining strong security.
+
+Technologies Used:
+Frontend:
+	1.React.js
+	2.Vite
+	3.Axios
+	4.React Router DOM
+	5.CSS
+Backend:
+	1.Flask
+	2.Flask-JWT-Extended
+	3.Flask-CORS
+
+Conclusion:
+
+This project demonstrates the implementation of a modern and secure authentication system using JWT. By separating authentication into short-lived access tokens and long-lived refresh tokens, the application improves both security and user experience. Axios interceptors automate token handling and refreshing, reducing repetitive code and ensuring uninterrupted access to protected resources. Overall, the project provides practical experience in authentication, authorization, REST API development, frontend-backend integration, and secure session management, making it a strong foundation for building production-ready web applications.

@@ -1,0 +1,72 @@
+1. What is the difference between an access token and a refresh token? Why are they different expiry lengths?
+
+Access Token:
+	An Access Token is used to access protected APIs like /api/me or /api/orders. It has a short expiry time (for example, 15 minutes or 	1 hour) to reduce the impact if it is stolen.
+
+Refresh Token:
+	A Refresh Token is used only to generate a new Access Token after the current one expires. It has a longer expiry time (for example, 	7 days or 30 days) so the user doesn't have to log in frequently.
+
+Why different expiry lengths?
+
+	Access Token: Short expiry improves security.
+	Refresh Token: Long expiry provides a better user experience because users stay logged in longer.
+
+
+2. What is an Axios interceptor and why is it better than manually adding the token to every API call?
+
+
+	An Axios interceptor is a function that runs automatically before every request or after every response.
+
+Instead of writing:
+
+	headers: {
+ 	 Authorization: `Bearer ${token}`
+	}
+
+	for every API request, the interceptor automatically adds the JWT token.
+
+Benefits:
+
+	No repeated code.
+	Easier to maintain.
+	Every request automatically includes the latest token.
+	Makes handling expired tokens much easier.
+
+
+3. What happens in your app when the access token expires mid-session? Walk through the exact sequence of events in your interceptor code.
+
+	When the Access Token expires:
+
+		1.The user sends a request to a protected API.
+		2.The server returns 401 Unauthorized because the Access Token has expired.
+		3.The Axios response interceptor detects the 401 error.
+		4.It sends the Refresh Token to the /refresh endpoint.
+		5.The server verifies the Refresh Token.
+		6.The server returns a new Access Token.
+		7.The interceptor stores the new Access Token.
+		8.The original API request is automatically retried using the new Access Token.
+		9.The user continues using the application without logging in again.
+
+	If the Refresh Token has also expired or is invalid, the user is redirected to the login page.
+
+4. What is the difference between JWT authentication and Flask session authentication? Why is JWT better for a React single-page application?
+
+Flask Session Authentication
+	1.The server stores the user's session data.
+	2.The browser receives a session cookie.
+	3.Every request sends the cookie back to the server.
+	4.The server checks the session in its memory or database.
+
+JWT Authentication
+	1.The server creates a signed JWT after login.
+	2.The client stores the token (for example, in local storage or a secure cookie).
+	3.Every request sends the JWT in the Authorization header.
+	4.The server verifies the JWT signature without storing session data.
+
+Why is JWT better for a React SPA?
+	1.React communicates with the backend through APIs.
+	2.JWT works well with REST APIs because it is stateless.
+	3.No server-side session storage is required.
+	4.Easier to scale across multiple servers.
+	5.Mobile apps and web apps can use the same authentication system.
+	6.The frontend can include the token in every API request using Axios interceptors.
